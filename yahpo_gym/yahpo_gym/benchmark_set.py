@@ -54,7 +54,7 @@ class BenchmarkSet:
         assert scenario is not None, "Please provide a valid scenario."
         self.config = cfg(scenario)
         self.encoding = self._get_encoding()
-        self.config_space = self._get_config_space()
+        self.config_space: CS.ConfigurationSpace = self._get_config_space()
         self.active_session = active_session
         self.noisy = noisy
         self.check = check
@@ -383,11 +383,11 @@ class BenchmarkSet:
         return f"BenchmarkSet({self.config.config_id})"
 
     def _config_to_xs(self, configuration):
-        if type(configuration) == CS.Configuration:
+        if isinstance(configuration, CS.Configuration):
             configuration = configuration.get_dictionary()
 
         # Re-order:
-        self.config_space._sort_hyperparameters()
+        # self.config_space._sort_hyperparameters()
         configuration = configuration.copy()
         configuration = {
             k: configuration.get(k)
